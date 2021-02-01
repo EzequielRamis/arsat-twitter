@@ -9,7 +9,14 @@ jobs:
       - name: Vercel Action
         uses: amondnet/vercel-action@v20.0.0
       - name: Test tweet
+        env:
+          ARSAT: ${{ secrets.ARSAT }}
+          AT: ${{ secrets.ACCESS_TOKEN }}
+          ATS: ${{ secrets.ACCESS_TOKEN_SECRET }}
+          AK: ${{ secrets.API_KEY }}
+          AKS: ${{ secrets.API_KEY_SECRET }}
+          BEARER: ${{ secrets.BEARER }}
         run: |
           curl --request GET \
-          --url '${{ secrets.ARSAT }}/tweet?at=${{ secrets.ACCESS_TOKEN }}&ats=${{ secrets.ACCESS_TOKEN_SECRET }}&ak=${{ secrets.API_KEY }}&aks=${{ secrets.API_KEY_SECRET }}' \
-          --header 'Authorization: Bearer ${{ secrets.BEARER }}'
+          --url "$ARSAT/tweet?at=$AT&ats=$ATS&ak=$AK&aks=$AKS" \
+          --header "Authorization: Bearer $BEARER"
