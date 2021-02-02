@@ -6,8 +6,6 @@ jobs:
   cron:
     runs-on: ubuntu-latest
     steps:
-      - name: Vercel Action
-        uses: amondnet/vercel-action@v20.0.0
       - name: Test tweet
         env:
           ARSAT: ${{ secrets.ARSAT }}
