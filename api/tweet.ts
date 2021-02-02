@@ -1,5 +1,31 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 import { TwitterClient } from "twitter-api-client";
+import get, { AxiosResponse } from "axios";
+import { subHours } from "date-fns";
+
+const ARSAT = "https://arsat.vercel.app/api";
+
+interface Price {
+  date: Date;
+  value: number;
+}
+
+function prices(res: AxiosResponse<any>): Price[] {
+  return res.data.map((p: any) => {
+    const price: Price = {
+      date: new Date(p.date),
+      value: p.v,
+    };
+    return price;
+  });
+}
+
+function fixed(n: number): String {
+  return n.toLocaleString("es", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+}
 
 export default async (req: NowRequest, res: NowResponse) => {
   const { ats, at, aks, ak } = req.query;
@@ -22,8 +48,24 @@ export default async (req: NowRequest, res: NowResponse) => {
       accessToken: at,
       accessTokenSecret: ats,
     });
+
+    let lastHour = subHours(Date.now(), 1);
+    const btc: Price[] = await get(
+      `${ARSAT}/prices/btcars?from=${lastHour.getTime()}`
+    )
+      .then((res) => prices(res))
+      .catch((err) => {
+        res.status(500).send(err);
+        return [];
+      });
+    const price = btc[btc.length - 1].value;
+    const arsat = 1 / (price / Math.pow(10, 8));
+    const tweet = `El #Bitcoin está a $${fixed(
+      Math.abs(price)
+    )}.\nEs decir, un peso equivale a ${arsat} satoshis.`;
+
     t.tweets
-      .statusesUpdate({ status: "hello from twitter api 👋" })
+      .statusesUpdate({ status: tweet })
       .then((v) => {
         res.status(200).send(`${v.created_at}: ${v.text}`);
       })
