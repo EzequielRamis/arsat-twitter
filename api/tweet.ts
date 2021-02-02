@@ -9,6 +9,7 @@ export default async (req: NowRequest, res: NowResponse) => {
     API_KEY_SECRET,
     API_KEY,
   } = process.env;
+
   if (
     ats === ACCESS_TOKEN_SECRET &&
     at === ACCESS_TOKEN &&
@@ -22,11 +23,10 @@ export default async (req: NowRequest, res: NowResponse) => {
       accessTokenSecret: ats,
     });
     t.tweets
-      .statusesUpdate({ status: "hello from twitter api" })
+      .statusesUpdate({ status: "hello from twitter api 👋" })
       .then((v) => {
         res.status(200).send(`${v.created_at}: ${v.text}`);
       })
       .catch((err) => res.status(500).send(err));
-  }
-  res.status(500).end();
+  } else res.status(500).end();
 };

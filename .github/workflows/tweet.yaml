@@ -1,7 +1,7 @@
 name: tweet
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "0 * * * *"
 jobs:
   cron:
     runs-on: ubuntu-latest
@@ -11,11 +11,9 @@ jobs:
       ATS: ${{ secrets.ACCESS_TOKEN_SECRET }}
       AK: ${{ secrets.API_KEY }}
       AKS: ${{ secrets.API_KEY_SECRET }}
-      BEARER_TOKEN: ${{ secrets.BEARER }}
     steps:
       - uses: actions/checkout@v2
       - name: Test tweet
         run: |
           curl --request GET \
-          --url "$ARSAT/tweet?at=$AT&ats=$ATS&ak=$AK&aks=$AKS" \
-          --header "Authorization: Bearer $BEARER_TOKEN"
+          --url "$ARSAT/tweet?at=$AT&ats=$ATS&ak=$AK&aks=$AKS"
