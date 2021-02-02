@@ -1,7 +1,8 @@
-name: deploy website
+name: deploy to vercel
 on: [push]
 jobs:
-  deploy:
+  production:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -11,3 +12,4 @@ jobs:
           vercel-org-id: ${{ secrets.ORG_ID}}  #Required
           vercel-project-id: ${{ secrets.PROJECT_ID}} #Required 
           working-directory: ./
+          vercel-args: '--prod' #Optional
