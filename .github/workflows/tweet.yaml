@@ -5,15 +5,15 @@ on:
 jobs:
   cron:
     runs-on: ubuntu-latest
+    env:
+      ARSAT: ${{ secrets.ARSAT }}
+      AT: ${{ secrets.ACCESS_TOKEN }}
+      ATS: ${{ secrets.ACCESS_TOKEN_SECRET }}
+      AK: ${{ secrets.API_KEY }}
+      AKS: ${{ secrets.API_KEY_SECRET }}
+      BEARER: ${{ secrets.BEARER }}
     steps:
       - name: Test tweet
-        env:
-          ARSAT: ${{ secrets.ARSAT }}
-          AT: ${{ secrets.ACCESS_TOKEN }}
-          ATS: ${{ secrets.ACCESS_TOKEN_SECRET }}
-          AK: ${{ secrets.API_KEY }}
-          AKS: ${{ secrets.API_KEY_SECRET }}
-          BEARER: ${{ secrets.BEARER }}
         run: |
           curl --request GET \
           --url "$ARSAT/tweet?at=$AT&ats=$ATS&ak=$AK&aks=$AKS" \
