@@ -1,0 +1,18 @@
+name: Yearly tweet
+on:
+  schedule:
+    - cron: "0 0 * * *"
+    # - cron: "0 0 1 1 *"
+jobs:
+  tweet:
+    runs-on: ubuntu-latest
+    env:
+      ARSAT: ${{ secrets.ARSAT }}
+      AT: ${{ secrets.ACCESS_TOKEN }}
+      ATS: ${{ secrets.ACCESS_TOKEN_SECRET }}
+      AK: ${{ secrets.API_KEY }}
+      AKS: ${{ secrets.API_KEY_SECRET }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Tweet
+        run: curl --request GET --url "$ARSAT/year?at=$AT&ats=$ATS&ak=$AK&aks=$AKS"

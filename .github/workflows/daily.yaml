@@ -1,9 +1,9 @@
-name: tweet
+name: Daily tweet
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "0 0 * * *"
 jobs:
-  cron:
+  tweet:
     runs-on: ubuntu-latest
     env:
       ARSAT: ${{ secrets.ARSAT }}
@@ -13,5 +13,5 @@ jobs:
       AKS: ${{ secrets.API_KEY_SECRET }}
     steps:
       - uses: actions/checkout@v2
-      - name: Test tweet
-        run: curl --request GET --url "$ARSAT/tweet?at=$AT&ats=$ATS&ak=$AK&aks=$AKS"
+      - name: Tweet
+        run: curl --request GET --url "$ARSAT/day?at=$AT&ats=$ATS&ak=$AK&aks=$AKS"
