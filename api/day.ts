@@ -1,11 +1,11 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 import get from "axios";
-import { isFirstDayOfMonth, subDays } from "date-fns";
+import { subDays } from "date-fns";
 import { Price, ARSAT, prices, fixed, tokens, satoshis, phrase } from "./utils";
 
 export default async (req: NowRequest, res: NowResponse) => {
-  const now = Date.now();
-  if (!isFirstDayOfMonth(now)) {
+  const now = new Date();
+  if (now.getUTCDate() !== 1) {
     let access = tokens(req.query);
     if (access.valid) {
       const t = access.twitter;

@@ -1,11 +1,11 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 import get from "axios";
-import { getYear, subYears } from "date-fns";
+import { subYears } from "date-fns";
 import { Price, ARSAT, prices, fixed, tokens, satoshis, phrase } from "./utils";
 
 export default async (req: NowRequest, res: NowResponse) => {
-  const now = Date.now();
-  const year = getYear(now);
+  const now = new Date();
+  const year = now.getUTCFullYear();
   let access = tokens(req.query);
   if (access.valid) {
     const t = access.twitter;

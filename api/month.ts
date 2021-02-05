@@ -1,11 +1,11 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 import get from "axios";
-import { getMonth, subMonths } from "date-fns";
+import { subMonths } from "date-fns";
 import { Price, ARSAT, prices, fixed, tokens, satoshis, phrase } from "./utils";
 
 export default async (req: NowRequest, res: NowResponse) => {
-  const now = Date.now();
-  const month = getMonth(now);
+  const now = new Date();
+  const month = now.getUTCMonth();
   if (month != 6 && month != 0) {
     let access = tokens(req.query);
     if (access.valid) {
