@@ -44,6 +44,6 @@ export default async (req: NowRequest, res: NowResponse) => {
     res
       .status(200)
       .send(
-        `${now}: Es el primer día del semestre, por lo que no se devuelve el tweet mensual.`
+        `${now.getTime()}: Es el primer día del semestre, por lo que no se devuelve el tweet mensual.`
       );
 };
