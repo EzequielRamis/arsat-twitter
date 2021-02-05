@@ -30,7 +30,7 @@ export default async (req: NowRequest, res: NowResponse) => {
       year - 1
     }, con un #DólarBlue 💸 llegando a $${fixed(
       usd[0].value
-    )}, el #Bitcoin ${text} desde principios del mismo año, cerrando en estas últimas horas a $${fixed(
+    )}, el #Bitcoin ${text} desde principios de año, cerrando en estas últimas horas a $${fixed(
       to
     )}.\n\n${satoshis(to)}\n\n¡Feliz ${year} a todos! 🥳🎉`;
 

@@ -1,8 +1,7 @@
 name: Semesterly tweet
 on:
   schedule:
-    - cron: "0 0 * * *"
-    # - cron: "0 0 1 7 *"
+    - cron: "0 0 1 7 *"
 jobs:
   tweet:
     runs-on: ubuntu-latest
