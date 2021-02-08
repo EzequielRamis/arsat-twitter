@@ -1,7 +1,16 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 import get from "axios";
 import { subYears } from "date-fns";
-import { Price, ARSAT, prices, fixed, tokens, satoshis, phrase } from "./utils";
+import {
+  Price,
+  ARSAT,
+  prices,
+  fixed,
+  tokens,
+  satoshis,
+  phrase,
+  GEO,
+} from "./utils";
 
 export default async (req: NowRequest, res: NowResponse) => {
   const now = new Date();
@@ -35,7 +44,7 @@ export default async (req: NowRequest, res: NowResponse) => {
     )}.\n\n${satoshis(to)}\n\n¡Feliz ${year} a todos! 🥳🎉`;
 
     t.tweets
-      .statusesUpdate({ status: tweet })
+      .statusesUpdate({ status: tweet, place_id: GEO })
       .then((v) => {
         res.status(200).send(`${new Date(v.created_at).getTime()}: ${v.text}`);
       })

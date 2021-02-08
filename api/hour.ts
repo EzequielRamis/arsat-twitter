@@ -1,6 +1,6 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 import get from "axios";
-import { Price, ARSAT, prices, fixed, tokens, satoshis } from "./utils";
+import { Price, ARSAT, prices, fixed, tokens, satoshis, GEO } from "./utils";
 
 export default async (req: NowRequest, res: NowResponse) => {
   let access = tokens(req.query);
@@ -19,7 +19,7 @@ export default async (req: NowRequest, res: NowResponse) => {
     )}`;
 
     t.tweets
-      .statusesUpdate({ status: tweet })
+      .statusesUpdate({ status: tweet, place_id: GEO })
       .then((v) => {
         res.status(200).send(`${new Date(v.created_at).getTime()}: ${v.text}`);
       })

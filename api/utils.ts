@@ -3,6 +3,7 @@ import { AxiosResponse } from "axios";
 import { TwitterClient } from "twitter-api-client";
 
 export const ARSAT = "https://arsat.vercel.app/api";
+export const GEO = "018f1cde6bad9747";
 
 export interface Price {
   date: Date;
